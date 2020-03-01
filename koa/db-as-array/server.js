@@ -23,11 +23,16 @@ const petsController = {
     db.push({ id: v4(), ...pet });
     ctx.response.body = `Pet added with name: ${pet.name} and specie ${pet.species}`;
   },
+  destroy: ctx => {
+    db.splice(db.indexOf(ctx.params.id), 1);
+    ctx.response.body = `Pet with id ${ctx.params.id} was removed!`;
+  }
 }
 
 router.get("/pets", petsController.list);
 router.get("/pets/:id", petsController.show);
 router.post("/pets", petsController.add);
+router.delete("/pets/:id", petsController.destroy);
 
 app
   .use(router.routes())
