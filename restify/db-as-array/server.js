@@ -24,7 +24,10 @@ const petsController = {
     next();
   },
   destroy: (req, res, next) => {
-    db.splice(db.indexOf(req.params.id), 1);
+    db.splice(db.findIndex(i => {
+      return i.id === req.params.id;
+    }), 1);
+
     res.send(`Pet with id ${req.params.id} was removed!`);
     next();
   },
